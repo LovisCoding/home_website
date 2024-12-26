@@ -1,24 +1,23 @@
-name: Deploy to Production
+name: Debug Secrets
 
 on:
   push:
     branches:
-      - main  # Branche qui déclenche le déploiement
+      - main  # Exécute ce workflow sur les push dans la branche `main`.
 
 jobs:
-  deploy:
+  debug:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      # Étape 1 : Récupérer le code (optionnel si tu ne veux que vérifier les secrets)
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
-    - name: Deploy via SSH
-      uses: appleboy/ssh-action@v0.1.4
-      with:
-        host: ${{ secrets.SERVER_HOST }}
-        username: ${{ secrets.SERVER_USER }}
-        password: ${{ secrets.SERVER_PASSWORD }}
-       
-        script: echo "SSH connection successful!"
-        debug: true
+      # Étape 2 : Debug des secrets
+      - name: Debug Secrets
+        run: |
+          echo "Testing secrets configuration..."
+          echo "Host: ${{ secrets.SERVER_HOST }}"
+          echo "Username: ${{ secrets.SERVER_USER }}"
+          echo "Password: [REDACTED]"  # Ne pas afficher les mots de passe directement
