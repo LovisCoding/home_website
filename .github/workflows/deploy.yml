@@ -1,23 +1,20 @@
-name: Debug Secrets
+name: Verify SSH Secrets
 
 on:
   push:
     branches:
-      - main  # Exécute ce workflow sur les push dans la branche `main`.
+      - main
 
 jobs:
-  debug:
+  test-secrets:
     runs-on: ubuntu-latest
 
     steps:
-      # Étape 1 : Récupérer le code (optionnel si tu ne veux que vérifier les secrets)
-      - name: Checkout Code
-        uses: actions/checkout@v3
-
-      # Étape 2 : Debug des secrets
-      - name: Debug Secrets
-        run: |
-          echo "Testing secrets configuration..."
-          echo "Host: ${{ secrets.SERVER_HOST }}"
-          echo "Username: ${{ secrets.SERVER_USER }}"
-          echo "Password: [REDACTED]"  # Ne pas afficher les mots de passe directement
+      # Tester la connexion SSH
+      - name: Test SSH Connection
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          script: echo "SSH connection successful!"
