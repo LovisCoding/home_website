@@ -20,9 +20,5 @@ jobs:
         username: ${{ secrets.SERVER_USER }}
         password: ${{ secrets.SERVER_PASSWORD }}
        
-        script: |
-          cd public_html/github/home_website
-          git pull origin main
-          npm install   # Exemple : installer les dépendances
-          npm run build # Exemple : construire le projet
+        script: echo "SSH connection successful!"
         debug: true
