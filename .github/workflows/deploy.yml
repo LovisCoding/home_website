@@ -1,0 +1,26 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main  # Branche qui déclenche le déploiement
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Deploy via SSH
+      uses: appleboy/ssh-action@v0.1.4
+      with:
+        host: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USER }}
+        password: ${{ secrets.SERVER_PASSWORD }}
+        script: |
+          cd public_html/github/home_website
+          git pull origin main
+          npm install   # Exemple : installer les dépendances
+          npm run build # Exemple : construire le projet
