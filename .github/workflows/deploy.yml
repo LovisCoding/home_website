@@ -1,0 +1,5 @@
+- name: Debug Secrets (Temporary)
+  run: |
+    echo "Host: ${{ secrets.SERVER_HOST }}"
+    echo "Username: ${{ secrets.SERVER_USER }}"
+    echo "Password: ${{ secrets.SERVER_PASSWORD }}" # Attention : Supprime cette ligne après le test
